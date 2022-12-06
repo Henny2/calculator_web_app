@@ -10,3 +10,7 @@
     background-color:yellow;
     font-weight:bold; color:red;
 }  
+#calculation{
+    text-align: right;
+    padding-right: 1em;
+}
