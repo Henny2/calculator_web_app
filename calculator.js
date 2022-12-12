@@ -9,45 +9,32 @@ for (let i = 0; i < table_rows.length; i++) {
     }
 }
 let current_operator = ''
+
+// IDEA: setting one variable for the current_val and one variable for the running sum/diff etc
+
+
+
+
 console.log('end')
 function calculate(operator){
-    current_val = +document.getElementById('calculation').innerText
-    console.log(current_val) 
+    // current_val = +document.getElementById('calculation').innerText
+    // console.log(current_val) 
     console.log(document.getElementById(operator).className)
     if (document.getElementById(operator).className === 'operators') {
         // operators 
+        console.log('operators clicked')
         current_operator = operator
-        
     }
     else {
         // numbers
-        if (current_operator === "-"){
-            alert('Please select an operator.')
+        // display the clicked number 
+        console.log('clicked number')
+        if (operator === ""){
+            document.getElementById('calculation').innerText = +operator
+        
         }
-        else if (current_operator === "+"){
-            document.getElementById('calculation').innerText = current_val + +operator
-            current_operator = ''
-        }
-        else if (current_operator === "-"){
-            document.getElementById('calculation').innerText = current_val - +operator
-            current_operator = ''
-        }
-        else if (current_operator === "="){
-            document.getElementById('calculation').innerText = current_val 
-            current_operator = ''
-        }
-        else if (current_operator === "÷"){
-            document.getElementById('calculation').innerText = current_val / +operator
-            current_operator = ''
-        }
-        else if (current_operator === "C"){
-            document.getElementById('calculation').innerText = 0
-            current_operator = ''
-        }
-        else {
-            console.log('something else')
-        }
-
+        document.getElementById('calculation').innerText = +operator
+        current_operator = ""
     }
     console.log(operator)
 
