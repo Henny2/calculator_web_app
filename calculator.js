@@ -55,8 +55,9 @@ function calculate(operator){
             calculated_val = calculated_val - clicked_val
             current_operator = ''
         }
-        else if (current_operator === "*"){
+        else if (current_operator === "x"){
             calculated_val = calculated_val * clicked_val
+            console.log(4*3)
             current_operator = ''
         }
         else if (current_operator === "÷"){
