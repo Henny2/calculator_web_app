@@ -15,10 +15,11 @@ function calculate(firstNum, secondNum, operator) {
     else if (operator === 'divide') {
         result = parseFloat(firstNum) / parseFloat(secondNum)
     }
-    console.log(firstNum)
-    console.log(secondNum)
-    console.log(operator)
-    console.log(result)
+    // console.log(firstNum)
+    // console.log(secondNum)
+    // console.log(operator)
+    // console.log(result)
+    console.log('calculation ' + firstNum + operator + secondNum)
     return result.toString()
 }
 // const calculator = document.querySelector('.calculator')
@@ -29,16 +30,28 @@ keys.addEventListener('click', e => {
         const action = key.dataset['action']
         const keyContent = key.textContent
         const displayedNum = display.textContent
+        const firstNumber = calculator.dataset['firstNum']
+        const operator = calculator.dataset['operator']
+        const prevKeyType = calculator.dataset['previousKeyType']
+        const secondNumber = displayedNum
+
+        console.log('firstnumber ' + firstNumber)
+        console.log('operator ' + operator)
+        console.log('prevKey ' + prevKeyType)
+        console.log('secondNumber ' + secondNumber)
+        console.log('----------------------------------------')
 
         Array.from(key.parentNode.children).forEach(k => k.classList.remove('is-depressed'))
+
         if (!action) {
-            const prevKeyType = calculator.dataset['previousKeyType']
+
             if (displayedNum === '0' || prevKeyType === 'operator') {
                 display.textContent = keyContent
             }
             else {
                 display.textContent = displayedNum + keyContent
             }
+            calculator.dataset.previousKeyType = 'number'
         }
         if (
             action === 'add' ||
@@ -46,31 +59,43 @@ keys.addEventListener('click', e => {
             action === 'multiply' ||
             action === 'divide'
         ) {
+
+            // Note: It's sufficient to check for firstValue and operator because secondValue always exists
+            if (firstNumber) { console.log('firstnumber') }
+            if (operator) { console.log('operator ' + operator) }
+            console.log('prevKey ' + prevKeyType)
+            if (prevKeyType != 'operator') { console.log('prevKeyType') }
+            if (firstNumber && operator && prevKeyType != 'operator' && prevKeyType != 'calculate') {
+                console.log('test')
+                display.textContent = calculate(firstNumber, secondNumber, operator)
+            }
+
             key.classList.add('is-depressed')
             calculator.dataset['previousKeyType'] = 'operator'
             calculator.dataset['operator'] = action
-            calculator.dataset['firstNum'] = displayedNum
-            // console.log('DISPLAYED ' + displayedNum)
-            // console.log('firsNUm ' + document.querySelector('.calculator').dataset.firstNum)
+            calculator.dataset['firstNum'] = display.textContent
+            // calculator.dataset['firstNum'] = displayedNum
+
         }
-        if (action === 'decimal' && !displayedNum.includes('.')) {
-            if (prevKeyType === 'operator') {
+        if (action === 'decimal') {
+            if (!displayedNum.includes('.')) {
+                display.textContent = displayedNum + '.'
+            } else if (previousKeyType === 'operator') {
                 display.textContent = '0.'
             }
-            else {
-                display.textContent = displayedNum + '.'
-            }
+
+            calculator.dataset.previousKeyType = 'decimal'
         }
         if (action === 'clear') {
             console.log('clear key!')
+            calculator.dataset.previousKeyType = 'clear'
         }
         if (action === 'calculate') {
-            const secondNumber = displayedNum
-            const firstNumber = calculator.dataset['firstNum']
 
-            const operator = calculator.dataset['operator']
             const calculatedResult = calculate(firstNumber, secondNumber, operator)
             display.textContent = calculatedResult
+            calculator.dataset.previousKeyType = 'calculate'
+            // calculator.dataset['firstNum'] = display.textContent
         }
     }
 })
