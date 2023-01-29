@@ -72,10 +72,10 @@ function updateCalculatorState(key, calculator, calculatedValue, displayedNum) {
     }
     if (keyType === 'calculate') {
         if (firstValue && previousKeyType === 'calculate') {
-            key.dataset.modValue = modValue
+            calculator.dataset.modValue = modValue
         }
         else {
-            key.dataset.modValue = displayedNum
+            calculator.dataset.modValue = displayedNum
         }
     }
 }
